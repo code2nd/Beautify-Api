@@ -1,0 +1,38 @@
+.header {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  height: 64px;
+  background: #fff;
+  -webkit-box-shadow: 0 2px 8px #f0f1f2;
+  box-shadow: 0 2px 8px #f0f1f2;
+  .ant-col {
+    height: 64px;
+  }
+  .navi-wrap{
+    padding-right: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 0;
+    > a {
+      color: rgba(0, 0, 0, .65);
+    }
+  }
+}
+
+.content{
+  flex: 1;
+}
+
+.ant-popover-content {
+  .ant-list {
+    .ant-list-items{
+      padding-left: 0;
+      .ant-list-item {
+        cursor: pointer;
+        padding: 8px 0;
+      }
+    }
+  }
+}

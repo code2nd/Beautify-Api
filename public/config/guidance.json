@@ -1,0 +1,403 @@
+{
+  "tips": {
+    "key": "tips",
+    "title": "友情提示",
+    "children": [
+      {
+        "key": "urlPrifix",
+        "title": "Url前缀",
+        "content": [
+          {
+            "key": "urlPrifix1",
+            "type": "moduleTitle",
+            "title": "Url前缀",
+            "hash": "urlPrifix",
+            "style": {"marginTop": 0}
+          },
+          {
+            "key": "urlPrifix2",
+            "type": "dangerP",
+            "text": "示例文档所有的API发布版本均以 <b>www.jalamy.cn:3000</b> 开头"
+          },
+          {
+            "key": "urlPrifix3",
+            "type": "codeArea",
+            "codes": "GET  /classic/latest",
+            "hasQuot": false
+          },
+          {
+            "key": "urlPrifix4",
+            "type": "p",
+            "text": "你需要使用如下URL来调用：",
+            "style": {}
+          },
+          {
+            "key": "urlPrifix5",
+            "type": "codeArea",
+            "codes": "GET  https://www.jalamy.cn:3000/classic/latest",
+            "hasQuot": false
+          }
+        ]
+      },
+      {
+        "key": "httpAction",
+        "title": "HTTP动作",
+        "content": [
+          {
+            "key": "httpAction1",
+            "type": "moduleTitle",
+            "title": "HTTP动作",
+            "hash": "httpAction",
+            "style": {}
+          },
+          {
+            "key": "httpAction2",
+            "type": "p",
+            "text": "任何参数提交（除 GET 参数外）均需要严格符合JSON数据格式。不要以单引号表示JSON 的键或者值。所有json数据字符串都必须以双引号\" \" 来引用。",
+            "style": {}
+          },
+          {
+            "key": "httpAction3",
+            "type": "paraTitle",
+            "title": "错误参数",
+            "size": 16
+          },
+          {
+            "key": "httpAction4",
+            "type": "codeArea",
+            "codes": "POST {'art_id': 3, 'type': 100}",
+            "hasQuot": false
+          },
+          {
+            "key": "httpAction5",
+            "type": "paraTitle",
+            "title": "正确参数",
+            "size": 16
+          },
+          {
+            "key": "httpAction6",
+            "type": "codeArea",
+            "codes": "POST {\"art_id\": 3, \"type\": 100}",
+            "hasQuot": false
+          }
+        ]
+      },
+      {
+        "key": "application/json",
+        "title": "application/json",
+        "content": [
+          {
+            "key": "application/json1",
+            "type": "moduleTitle",
+            "title": "application/json",
+            "hash": "application/json",
+            "style": {}
+          },
+          {
+            "key": "application/json2",
+            "type": "p",
+            "text": "Api不会要求每次HTTP/HTTPS请求都在HTTP Header里附带 Content-type: application/json。 但是，如果你对你所使用的HTTP请求框架不熟悉的话，还是建议在HTTP头里加上Content-Type： application/json.",
+            "style": {}
+          }
+        ]
+      },
+      {
+        "key": "response",
+        "title": "关于api调用返回的结果",
+        "content": [
+          {
+            "key": "response1",
+            "type": "moduleTitle",
+            "title": "关于api调用返回的结果",
+            "hash": "response",
+            "style": {}
+          },
+          {
+            "key": "response2",
+            "type": "p",
+            "text": "所有HTTP请求只有2种类型的json返回结果:",
+            "style": {"fontSize": 16}
+          },
+          {
+            "key": "response3",
+            "type": "p",
+            "text": "1.返回资源的特定信息(如获取一本书的详细信息):",
+            "style": {}
+          },
+          {
+            "key": "response4",
+            "type": "codeArea",
+            "codes": {
+              "id": 1,
+              "title": "东洋白话",
+              "author": "黄文炜",
+              "cover": "https://easyreadfs.nosdn.127.net/4l2smGrYojC2Qvwpg72PQQ==/8796093022439326262",
+              "score": 8,
+              "rate_num": 92,
+              "words": 8.4,
+              "clicks": 129.8,
+              "category": "异国文化",
+              "tags": "日本文化",
+              "abstract": "在本书中，知名旅日专栏作家黄文炜以异乡人的视角，对日本的政治、经济、生活、文化等诸多方面作了近距离观察。通过作者客观冷静的笔触，我们可以看到一个更加真实的日本。在许多篇文章中，作者将中国的现状与日本进行对比，点出其中存在的差距。这时的日本就像一面镜子，看见日本可以看到自己的不足，对于认清自我具有十分重要的意义。",
+              "author_des": "黄文炜，著有《东洋白话》。",
+              "popular": 0
+            }
+          },
+          {
+            "key": "response5",
+            "type": "p",
+            "text": "2. 请求出错，返回一组消息。这类消息通常具有共同的消息体样式。 通用返回格式是由msg、error_code及request三个参数组成的JSON响应体:",
+            "style": {}
+          },
+          {
+            "key": "response6",
+            "type": "codeArea",
+            "codes": {
+              "msg": [
+                  "bookId字段是必填参数"
+              ],
+              "error_code": 10000,
+              "request": "GET /v1/book/info"
+            }
+          },
+          {
+            "key": "response7",
+            "type": "dangerP",
+            "text": "<b>error_code</b> 表示错误码；<b>msg</b> 表示错误信息； <b>request</b> 表示此次访问的HTTP地址。当错误消息未能解决你的问题时，请查找错误返回码，以获取有效的错误消息。"
+          }
+        ]
+      }
+    ]
+  },
+  "instructions": {
+    "key": "instructions",
+    "title": "说明",
+    "children": [
+      {
+        "key": "aboutApi",
+        "title": "api配置文件说明",
+        "content": [
+          {
+            "key": "aboutApi1",
+            "type": "moduleTitle",
+            "title": "api配置文件说明",
+            "hash": "aboutApi",
+            "style": {"marginTop": 0}
+          },
+          {
+            "key": "aboutApi2",
+            "type": "p",
+            "text": "为确保api文档正确的被读取，需严格按照如下格式进行配置",
+            "style": {}
+          },
+          {
+            "key": "aboutApi3",
+            "type": "codeArea",
+            "codes": {
+              "info": {
+                "title": "万能胶囊",
+                "version": "1.0.0",
+                "description": "小程序万能胶囊的后台接口"
+              },
+              "host": "https://www.jalamy.cn:3000",
+              "basePath": "/v1",
+              "interfaces": [
+                {
+                  "key": "song",
+                  "title": "歌曲相关接口",
+                  "children": [{
+                      "key": "/song",
+                      "title": "获取歌曲列表",
+                      "path": "/song",
+                      "method": "get",
+                      "description": "获取接口分页列表",
+                      "parameters": [{
+                          "name": "page",
+                          "in": "query",
+                          "description": "页码",
+                          "required": true,
+                          "type": "number"
+                        },
+                        {
+                          "name": "pageSize",
+                          "in": "query",
+                          "description": "每页数据的条数",
+                          "required": true,
+                          "type": "number"
+                        }
+                      ],
+                      "responses": {
+                        "success": {
+                          "type": "object",
+                          "example": {
+                            "pages": 3,
+                            "count": 30,
+                            "list": [{
+                                "song_id": 7149583,
+                                "name": "告白气球",
+                                "url": "http://47.107.229.37:8081/gm/music/336/555949/gaobaiqiqiu.mp3",
+                                "artist": "周杰伦",
+                                "pic120": "http://img2.kuwo.cn/star/albumcover/120/64/39/3540704654.jpg",
+                                "pic": "http://img2.kuwo.cn/star/albumcover/300/64/39/3540704654.jpg",
+                                "album_name": "周杰伦的床边故事"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "response_description": [
+                        {
+                          "name": "song_id",
+                          "description": "歌曲id"
+                        },
+                        {
+                          "name": "name",
+                          "description": "歌曲名称"
+                        },
+                        {
+                          "name": "url",
+                          "description": "歌曲链接"
+                        },
+                        {
+                          "name": "artist",
+                          "description": "演唱者"
+                        },
+                        {
+                          "name": "pic",
+                          "description": "歌曲封面图片"
+                        },
+                        {
+                          "name": "album_name",
+                          "description": "专辑名称"
+                        }
+                      ] 
+                    }
+                  ]
+                },
+                {
+                  "key": "book",
+                  "title": "书籍相关接口",
+                  "children": [{
+                      "key": "/book",
+                      "title": "获取书籍列表",
+                      "path": "/book",
+                      "method": "get",
+                      "description": "获取书籍列表",
+                      "parameters": [{
+                          "name": "page",
+                          "in": "query",
+                          "description": "页码",
+                          "required": true,
+                          "type": "number"
+                        },
+                        {
+                          "name": "pageSize",
+                          "in": "query",
+                          "description": "每页数据的条数",
+                          "required": true,
+                          "type": "number"
+                        },
+                        {
+                          "name": "keyword",
+                          "in": "query",
+                          "description": "查询关键字",
+                          "required": false,
+                          "type": "string"
+                        }
+                      ],
+                      "responses": {
+                        "success": {
+                          "type": "array",
+                          "example": [{
+                              "book_id": "003617830ccd4eb1a9eaea82c82e1c6f_4",
+                              "title": "乌合之众：群体心理研究",
+                              "author": "【法】古斯塔夫·勒庞",
+                              "cover": "https://easyreadfs.nosdn.127.net/RNcr-PYaXJMs4CJydTzlZQ==/8796093024634699046",
+                              "score": 8,
+                              "tags": "社会学，人类学"
+                            }
+                          ]
+                        }
+                      },
+                      "response_description": [
+                        {
+                          "name": "book_id",
+                          "description": "书籍id"
+                        },
+                        {
+                          "name": "title",
+                          "description": "书名"
+                        },
+                        {
+                          "name": "author",
+                          "description": "作者"
+                        },
+                        {
+                          "name": "cover",
+                          "description": "封面地址"
+                        },
+                        {
+                          "name": "score",
+                          "description": "评分"
+                        },
+                        {
+                          "name": "tags",
+                          "description": "标签"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "errorCode": {
+                "key": "errorCode",
+                "title": "错误码",
+                "description": "请以错误码来判断具体的错误，不要以文字描述作为判断的依据",
+                "dataSource": [
+                  {
+                    "code": "100x",
+                    "meaning": "通用类型",
+                    "dataSource": [
+                      {
+                        "code": 0,
+                        "meaning": "OK,成功"
+                      },
+                      {
+                        "code": 1000,
+                        "meaning": "输入参数错误"
+                      },
+                      {
+                        "code": 1001,
+                        "meaning": "输入的json格式不正确"
+                      },
+                      {
+                        "code": 1002,
+                        "meaning": "找不到资源"
+                      },
+                      {
+                        "code": 1003,
+                        "meaning": "未知错误"
+                      },
+                      {
+                        "code": 1004,
+                        "meaning": "禁止访问"
+                      },
+                      {
+                        "code": 1005,
+                        "meaning": "不正确的开发者key"
+                      },
+                      {
+                        "code": 1006,
+                        "meaning": "服务器内部错误"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

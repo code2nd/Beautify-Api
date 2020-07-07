@@ -1,0 +1,58 @@
+@import '../iconfont/iconfont.css';
+@import './common.less';
+
+body {
+  margin: 0;
+  font-family: @global-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root{
+  .sized(100%, 100%);
+}
+.App {
+  .sized(100%, 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.container {
+  .sized(100%, calc(100vh - 64px));
+  display: flex;
+  justify-content: center;
+  // overflow: auto;
+}  
+
+.custom-content{
+  .sized(100%, 100%);
+  overflow-y: auto;
+  padding: 0 170px 30px 64px;
+}
+
+.page-title{
+  margin-bottom: 20px;
+}
+
+.page-title > hgroup {
+  padding-top: 10px;
+  /* margin-bottom: 20px; */
+}
+
+.page-title > hgroup > .description {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  font-family: MicroSoft YaHei;
+}
+
+.para-title {
+  margin: '16px 0';
+  font-weight: 700;
+}

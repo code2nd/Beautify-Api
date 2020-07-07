@@ -1,0 +1,113 @@
+@import '../../assets/css/common.less';
+
+.page-main {
+  width: 1200px;
+  .doc-list {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .doc-module{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 0;
+      margin-right: 20px;
+      width: -webkit-calc((100% - 20px*5)/ 6);
+      width: calc((100% - 20px*5)/ 6); 
+      height: 206px;
+      // background: #f2f2f2;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      .doc-icon{
+        .sized(108px, 108px);
+        background: url('../../assets/img/file.png');
+        background-size: 100%;
+        cursor: pointer;
+      }
+      .doc-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        .title, .description {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          padding: 0 8px;
+        }
+        .title {
+          height: 36px;
+          font-size: 16px;
+          color: #333;  
+        }
+        .description {
+          height: 24px;
+          font-size: 14px;
+          color: #999;
+          margin: 0; 
+        }
+      }
+    }
+    .doc-module:nth-child(6n) {
+      margin-right: 0;
+    }
+  }
+  .doc-list::after {
+    content:' ';
+    flex:auto;
+  }
+}
+
+.ant-list-item {
+  padding: 8px 0;
+  cursor: pointer;
+  .ant-list-item-meta {
+    display: flex;
+    align-items: center;
+    .ant-list-item-meta-title {
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.edit-popover {
+  display: none;
+}
+
+.edit-popover-hover {
+  display: block;
+}
+
+.module-hover {
+  background: #f2f2f2;
+}
+
+.shenglve {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #aaa;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.ant-modal-mask {
+  z-index: 2000;
+}
+.ant-modal-wrap {
+  z-index: 2000;
+}
+
+.ant-upload.ant-upload-drag .ant-upload {
+  padding: 20px 0;
+}
+.ant-upload.ant-upload-drag p.ant-upload-drag-icon {
+  margin-bottom: 0;
+}

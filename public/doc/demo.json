@@ -1,0 +1,461 @@
+{
+  "info": {
+    "description": "小程序万能胶囊的后台接口",
+    "version": "1.0.0",
+    "title": "万能胶囊"
+  },
+  "host": "http://localhost:3000",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "song",
+      "description": "歌曲相关接口"
+    },
+    {
+      "name": "book",
+      "description": "书籍相关接口"
+    }
+  ],
+  "paths": {
+    "/song": {
+      "get": {
+        "tags": ["song"],
+        "summary": "获取歌曲",
+        "description": "分页获取歌曲",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数据的条数",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                  {
+                    "song_id": 7149583,
+                    "name": "告白气球",
+                    "url": null,
+                    "artist": "周杰伦",
+                    "pic120": "http://img2.kuwo.cn/star/albumcover/120/64/39/3540704654.jpg",
+                    "pic": "http://img2.kuwo.cn/star/albumcover/300/64/39/3540704654.jpg",
+                    "album_name": "周杰伦的床边故事"
+                  }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song/search": {
+      "get": {
+        "tags":["song"],
+        "summary": "根据关键字搜索歌曲/歌手",
+        "description": "搜索歌手结果为该歌手信息和其歌曲信息，搜索歌曲结果为该歌手信息和该歌曲信息",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "搜索关键字",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                  {
+                    "singer_id": 336,
+                    "name": "周杰伦",
+                    "songs": 1024,
+                    "albums": 34,
+                    "pic120": null
+                  },
+                  {
+                    "song_id": 7149583,
+                    "name": "告白气球",
+                    "url": null,
+                    "artist": "周杰伦",
+                    "album": "周杰伦的床边故事",
+                    "popular": 1
+                  }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song/singer": {
+      "get": {
+        "tags": ["song"],
+        "summary": "根据歌手id获取歌曲",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "singerId",
+            "in": "query",
+            "description": "歌手id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                  {
+                    "id": 1,
+                    "song_id": 7149583,
+                    "name": "告白气球",
+                    "url": null,
+                    "artistid": 336,
+                    "albumid": 555949,
+                    "popular": 1,
+                    "createdAt": null,
+                    "updatedAt": null
+                  }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song/album": {
+      "get": {
+        "tags": ["song"],
+        "summary": "根据歌手id获取专辑",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "singerId",
+            "in": "query",
+            "description": "歌手id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页条数",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                  {
+                    "id": 6,
+                    "album_id": 4533,
+                    "album_name": "七里香",
+                    "singer_id": 336,
+                    "pic120": "http://img2.kuwo.cn/star/albumcover/120/30/97/4276557883.jpg",
+                    "pic": "http://img2.kuwo.cn/star/albumcover/300/30/97/4276557883.jpg",
+                    "pub_time": "2004-08-03",
+                    "createdAt": null,
+                    "updatedAt": null
+                }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song/song": {
+      "get": {
+        "tags": ["song"],
+        "summary": "根据歌曲id获取歌曲信息",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "song_id",
+            "in": "query",
+            "description": "歌曲id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                  {
+                    "id": 1,
+                    "song_id": 7149583,
+                    "name": "告白气球",
+                    "url": null,
+                    "artistid": 336,
+                    "albumid": 555949,
+                    "popular": 1,
+                    "createdAt": null,
+                    "updatedAt": "2019-12-12T07:42:35.000Z"
+                }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song/hot": {
+      "get": {
+        "tags": ["song"],
+        "summary": "获取热门搜索",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                  {
+                    "name": "说好不哭 (with 五月天阿信)",
+                    "popular": 6
+                  },
+                  {
+                      "name": "告白气球",
+                      "popular": 2
+                  },
+                  {
+                      "name": "周杰伦",
+                      "popular": 1
+                  }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/song/albumInfo": {
+      "get": {
+        "tags": ["song"],
+        "summary": "根据专辑id获取专辑信息",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": {
+                  "album_name": "周杰伦的床边故事",
+                  "album_pic": "http://img2.kuwo.cn/star/albumcover/300/64/39/3540704654.jpg",
+                  "singer_name": "周杰伦",
+                  "singer_pic": null
+                },
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book": {
+      "get": {
+        "tags": ["book"],
+        "summary": "获取书籍分页列表(包含搜索)",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": [
+                    {
+                        "book_id": "0798105feca847bebb6e73dc6c823d67_4",
+                        "title": "边城",
+                        "author": "沈从文",
+                        "cover": "https://easyreadfs.nosdn.127.net/pa1U7YQZFbWvTByRyYjzwQ==/6597131339308450763",
+                        "score": 10,
+                        "tags": "国学大家,中国文化"
+                    },
+                    {
+                        "book_id": "ca5d39d93f524a53bfe112bbbd843341_4",
+                        "title": "边城",
+                        "author": "沈从文",
+                        "cover": "https://easyreadfs.nosdn.127.net/KJI24EkufynwiL5vhCNF2w==/12094635724403",
+                        "score": 8,
+                        "tags": "长篇小说,中国,当代"
+                    }
+                ],
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/info": {
+      "get": {
+        "tags": ["book"],
+        "summary": "根据书籍id获取书籍信息",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "schema": {
+              "type":"object",
+              "example": {
+                "code": 1,
+                "data": {
+                  "id": 1,
+                  "title": "东洋白话",
+                  "author": "黄文炜",
+                  "cover": "https://easyreadfs.nosdn.127.net/4l2smGrYojC2Qvwpg72PQQ==/8796093022439326262",
+                  "score": 8,
+                  "rate_num": 92,
+                  "words": 8.4,
+                  "clicks": 129.8,
+                  "category": "异国文化",
+                  "tags": "日本文化",
+                  "abstract": "在本书中，知名旅日专栏作家黄文炜以异乡人的视角，对日本的政治、经济、生活、文化等诸多方面作了近距离观察。通过作者客观冷静的笔触，我们可以看到一个更加真实的日本。在许多篇文章中，作者将中国的现状与日本进行对比，点出其中存在的差距。这时的日本就像一面镜子，看见日本可以看到自己的不足，对于认清自我具有十分重要的意义。",
+                  "author_des": "黄文炜，著有《东洋白话》。",
+                  "popular": 0
+                },
+                "msg": "ok"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
