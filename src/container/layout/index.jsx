@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux'
 import { Row, Col } from 'antd'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { memo } from 'react';
 import { GithubOutlined } from '@ant-design/icons'
 import Title from './components/title'
 import Navi from './components/navi'
 import User from './components/user'
 import { getUserInfo } from '../../api'
-import { setIsLogin } from '../../store/actionCreators'
+import { setIsLogin } from '../../store/header/actionCreators'
 import './index.less';
 
 const MainLayout = memo((props) => {
@@ -44,10 +44,9 @@ const MainLayout = memo((props) => {
               </Col>
               <Col className="navi-wrap" span={12}>
                 <Navi />
-                {/* 链接到gituhb仓库 */}
-                <Link to="#" style={{marginRight: '10px'}}>
+                <a href="https://github.com/Jalamy/Beautify-Api" target="_blank" rel="noopener noreferrer" style={{marginRight: '10px'}}>
                   <GithubOutlined style={{ fontSize: '28px' }} />
-                </Link>
+                </a>
                 <User userInfo={userInfo} />
               </Col>
             </Row>

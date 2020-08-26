@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { List } from 'antd'
 import './index.less'
 
@@ -42,6 +43,10 @@ const ActionPopover = (props) => {
       )}
     />
   </>
+}
+
+ActionPopover.propTypes = {
+  handleItemClick: PropTypes.func.isRequired
 }
 
 export default ActionPopover

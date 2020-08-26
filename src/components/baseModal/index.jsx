@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Modal } from 'antd'
+import PropTypes from 'prop-types'
 
 const BaseModal = (props) => {
 
@@ -27,6 +28,15 @@ const BaseModal = (props) => {
       content
     }
   </Modal>
+}
+
+BaseModal.propTypes = {
+  title: PropTypes.string.isRequired, 
+  okText: PropTypes.string.isRequired,
+  cancelText: PropTypes.string.isRequired,
+  isShow: PropTypes.bool.isRequired, 
+  confirmLoading: PropTypes.bool.isRequired, 
+  content: PropTypes.array.isRequired
 }
 
 export default memo(BaseModal)

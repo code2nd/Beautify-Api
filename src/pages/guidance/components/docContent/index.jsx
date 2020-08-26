@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import DocModule from '../docModule'
 import Copyright from '../../../../components/copyright'
 
@@ -44,9 +45,14 @@ const DocContent = memo((props) => {
       className="custom-content" 
       ref={customContent}
     >
-      { getModuleList(data) }
+      <div style={{ flex: 1, minHeight: '100%' }}>{ getModuleList(data) }</div>
       <Copyright />
     </div>
 })
+
+DocContent.propTypes = {
+  hash: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired
+}
 
 export default DocContent

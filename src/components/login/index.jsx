@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
+import PropTypes from 'prop-types'
 import BaseForm from '../../components/baseForm'
 import { loginForm } from '../../utils/formConfig'
 import './index.less'
@@ -44,9 +45,14 @@ const Login = memo((props) => {
   </div>
 })
 
+Login.propTypes = {
+  handleSwichToReg: PropTypes.func.isRequired,
+  handleFormSubmit: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
-    isLogin: state.isLogin
+    isLogin: state.header.isLogin
   }
 }
 

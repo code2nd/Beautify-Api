@@ -25,7 +25,22 @@ const clearAllCookie = () => {
   }
 }
 
+const errorCodeMenu = (errorCodeData) => {
+  let errObj
+  if (errorCodeData) {
+    errObj = {
+      key: "errorHandle",
+      title: "错误处理",
+      children: [errorCodeData]
+    }
+  } else {
+    errObj = null
+  }
+  return errObj
+}
+
 export {
   validateMust,
-  clearAllCookie
+  clearAllCookie,
+  errorCodeMenu
 }

@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Avatar, Popover, List, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import UserModal from '../../../../components/userModal'
-import { setShowLoginModal } from '../../../../store/actionCreators'
+import { setShowLoginModal } from '../../../../store/header/actionCreators'
 import { logout } from '../../../../api'
 
 const data = [
@@ -84,6 +85,11 @@ const User = memo((props) => {
     <UserModal />
   </>
 })
+
+User.propTypes = {
+  userInfo: PropTypes.object.isRequired,
+  handleDispatchShowLoginModal: PropTypes.func.isRequired
+}
 
 const mapStateToState = (state) => {
   return {

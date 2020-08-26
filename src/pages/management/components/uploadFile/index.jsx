@@ -1,6 +1,7 @@
 import React from 'react'
 import { memo } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { Upload, message } from 'antd'
 import { uploadFileAction } from '../../../../api'
 import { InboxOutlined } from '@ant-design/icons'
@@ -51,9 +52,16 @@ const UploadFile = memo((props) => {
   </>
 })
 
+UploadFile.propTypes = {
+  isLogin: PropTypes.bool.isRequired,
+  handleSetFileName: PropTypes.func.isRequired,
+  handleConfirmShow: PropTypes.func.isRequired,
+  handleModalShow: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
-    isLogin: state.isLogin
+    isLogin: state.header.isLogin
   }
 }
 

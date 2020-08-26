@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import { BackTop } from 'antd'
 import PageTitle from '../../../../components/pageTitle'
 import ApiModule from '../apiModule'
@@ -119,5 +120,10 @@ const DocContent = memo((props) => {
     </BackTop>
   </div>
 })
+
+DocContent.propTypes = {
+  hash: PropTypes.string.isRequired,
+  docData: PropTypes.object.isRequired,
+}
 
 export default DocContent

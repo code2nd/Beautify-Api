@@ -1,23 +1,14 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useEffect, useCallback, useRef } from 'react'
+import PropTypes from 'prop-types'
 import { Modal, Form, Input, message, Spin } from 'antd'
 import { connect } from 'react-redux'
 import DocModule from './components/docModule'
 import UploadFile from './components/uploadFile'
-import { 
-  getDocList,
-  getDocListVisitor,
-  deleteFile, 
-  postDocRecord ,
-  deleteDocRecord,
-  updateDocRecord,
-  shearFile,
-  getDownloadFileInfo
-} from '../../api'
 import Storage from '../../models/storage'
 import BaseForm from '../../components/baseForm'
-// import BaseModal from '../../components/baseModal'
 import { validateMust } from '../../utils/utils'
 import { fileEditForm } from '../../utils/formConfig'
+import * as managementCreators from '../../store/management/actionCreators'
 import './index.less'
 
 const SStorage = new Storage('sessionStorage')
@@ -25,16 +16,32 @@ const LStorage = new Storage('localStorage')
 
 const Management = (props) => {
 
-  const { isLogin } = props
-
-  const [loading, setLoading] = useState(false)
-  const [docList, setDocList] = useState([])
-  const [isModalShow, setIsModalShow] = useState(false)
-  const [isConfirmShow, setIsConfirmShow] = useState(false)
-  const [isEditModalShow, setIsEditModalShow] = useState(false)
-  const [confirmLoading, setConfirmLoading] = useState(false)
-  const [fileName, setFileName] = useState('')
-  const [editData, setEditData] = useState({})
+  const { 
+    isLogin,
+    dataLoading,
+    docList,
+    isModalShow,
+    isConfirmShow,
+    isEditModalShow,
+    confirmLoading,
+    fileName,
+    editData,
+    // handleSetDataLoading,
+    handleGetDocList,
+    handleGetVisitorDocList,
+    handleModalShow,
+    handleConfirmShow,
+    handleSetFileName,
+    handleDeleteFile,
+    handleSetEditData,
+    handleSetIsEditModalShow,
+    handleSetConfirmLoading,
+    handleDeleteRecord,
+    handlePostDocRecord,
+    handleShearFile,
+    handleUpdateDocRecord,
+    handleDownload
+  } = props
 
   const [form] = Form.useForm()
   const getFormValue = useRef()
@@ -50,113 +57,20 @@ const Management = (props) => {
     }
   ]
 
-  const handleGetDocList = useCallback(async () => {
-    setLoading(true)
-    try {
-      const res = isLogin ? await getDocList() : await getDocListVisitor()
-      setDocList(res)
-      setLoading(false)
-    } catch (err) {
-      setDocList([])
-      setLoading(false)
-      console.log(err)
-    }
-  }, [isLogin])
-
-  // 删除文件
-  const handleDeleteFile = async (path) => {
-    try {
-      await deleteFile(path)
-      setIsConfirmShow(false)
-      SStorage.remove('uploadedFileInfo')
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  // 往数据库插入一条文档信息
-  const handlePostDocRecord = async (name, url, description) => {
-    try {
-      const res = await postDocRecord(name, url, description)
-      if (!res.error_code) {
-        message.success('上传成功')
-        handleGetDocList()
-      } else {
-        message.error(res.msg)
-      }
-    } catch (err) {
-      console.log(err)
-      handleDeleteFile(url)
-      message.error('上传失败')
-    }
-  }
-  
-  // 删除一条记录
-  const handleDeleteRecord = async (id) => {
-    try {
-      await deleteDocRecord(id)
-      message.success('删除成功')
-    } catch (err) {
-      console.log(err)
-      message.error('删除失败')
-    }
-  }
-
-  // 覆盖记录
-  const handleShearFile = async (name, url, filePath) => {
-    try {
-      await shearFile(name, url, filePath)
-      message.success('上传成功')
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  // 编辑请求
-  const handleUpdateDocRecord = async (id, name, description) => {
-    try {
-      await updateDocRecord(id, name, description)
-      handleGetDocList()
-      message.success('修改成功')
-      setIsEditModalShow(false)
-    } catch (err) {
-      if (err.error_code === 60001) {
-        message.error(err.msg)
-      } else {
-        console.info(err)
-      }
-    }
-  }
-
-  const handleModalShow = (isShow) => {
-    setIsModalShow(isShow)
-  }
-
-  const handleConfirmShow = (isShow) => {
-    setIsConfirmShow(isShow)
-  }
-
-  const handleSetFileName = (name) => {
-    /* const fileInfo = {name, path}
-    SStorage.set('uploadedFileInfo', fileInfo) */
-    setFileName(name)
-  }
-
   // 覆盖文件
   const handleConfirmOk = async () => {
     const { name, originUrl: url, filePath } = SStorage.get('uploadedFileInfo')
     await handleShearFile(name, url, filePath)
-    setIsConfirmShow(false)
+    handleConfirmShow(false)
   }
 
   // 取消覆盖文件
   const handleConfirmCancel = async () => {
-    // console.log(SStorage.get('uploadedFileInfo'))
     const { filePath, wordUrl } = SStorage.get('uploadedFileInfo')
+    // 删除刚上传的文件
     await handleDeleteFile(filePath)
     await handleDeleteFile(wordUrl)
-    setIsConfirmShow(false)
-    // 删除刚上传的文件
+    handleConfirmShow(false)
   }
 
   const handleOk = e => {
@@ -165,8 +79,8 @@ const Management = (props) => {
     
     if (description) {
       handlePostDocRecord(name, url, description)
-      setIsModalShow(false)
-      setConfirmLoading(false)
+      handleModalShow(false)
+      handleSetConfirmLoading(false)
     } else {
       message.info('请对项目进行简单描述')
     }
@@ -176,17 +90,15 @@ const Management = (props) => {
   const handleCancel = async (e) => {
     const { url } = SStorage.get('uploadedFileInfo')
     await handleDeleteFile(url)
-    setIsModalShow(false)
+    handleModalShow(false)
   }
 
   // 编辑 点击
   const handleEditClick = useCallback(async (data) => {
-    // await handleGetOneDocInfo(key)
     const { id, name, description } = data
-    setEditData({ id, name, description })
-    setIsEditModalShow(true)
-    // console.log('编辑', key)
-  }, [])
+    handleSetEditData({ id, name, description })
+    handleSetIsEditModalShow(true)
+  }, [handleSetEditData, handleSetIsEditModalShow])
 
   // 清除文档缓存
   const removeDocStorage = (name) => {
@@ -203,23 +115,6 @@ const Management = (props) => {
     handleGetDocList()
   }
 
-  // 下载文件
-  const handleDownload = async (fileType, fileName) => {
-    try {
-      const res = await getDownloadFileInfo(fileType, fileName)
-      if (res) {
-        const { filePath, name } = res
-        const host = process.env.NODE_ENV === 'development' ? 'localhost' : 'jalamy.cn'
-        const url = `http://${host}:3005/v1/file/download?filePath=${filePath}&fileName=${name}`
-        window.open(url, '_self')
-      } else {
-        message.info('下载的文件不存在')
-      }
-    } catch (err) {
-      message.error(err.msg)
-    }
-  }
-
   const handleDownloadJsonClick = (name) => {
     handleDownload('json', name)
   }
@@ -234,14 +129,13 @@ const Management = (props) => {
     if (validateMust(result, editMust)) {
       handleUpdateDocRecord(editData.id, result.name, result.description)
     }
-    // setEditData({})
+    handleSetEditData({})
     // console.log('提交修改')
   }
 
   const handleEditCancel = () => {
-    // setEditData({})
-    setIsEditModalShow(false)
-    // console.log('取消修改')
+    handleSetEditData({})
+    handleSetIsEditModalShow(false)
   }
 
   // 跳转到文档页面
@@ -257,8 +151,14 @@ const Management = (props) => {
   }
 
   useEffect(() => {
-    handleGetDocList()
-  }, [handleGetDocList])
+    if (docList.length < 1) {
+      if (isLogin) {
+        handleGetDocList()
+      } else {
+        handleGetVisitorDocList()
+      }
+    }
+  }, [isLogin, docList, handleGetDocList, handleGetVisitorDocList])
 
   return <div className="container" onClick={handleShowCustomPopover}>
     <main className="page-main">
@@ -267,7 +167,7 @@ const Management = (props) => {
         handleConfirmShow={handleConfirmShow} 
         handleSetFileName={handleSetFileName}
       />
-      <Spin spinning={loading}>
+      <Spin spinning={dataLoading}>
         <section className="doc-list">
           {
             docList.length ? docList.map((item) => {
@@ -341,12 +241,84 @@ const Management = (props) => {
  </div>
 }
 
+Management.propTypes = {
+  isLogin: PropTypes.bool.isRequired
+}
+
 const mapStateToProps = (state) => {
-  const { isLogin } = state
+
+  const {
+    dataLoading,
+    docList,
+    isModalShow,
+    isConfirmShow,
+    isEditModalShow,
+    confirmLoading,
+    fileName,
+    editData
+  } = state.management
 
   return {
-    isLogin
+    isLogin: state.header.isLogin,
+    dataLoading,
+    docList,
+    isModalShow,
+    isConfirmShow,
+    isEditModalShow,
+    confirmLoading,
+    fileName,
+    editData
   }
 }
 
-export default connect(mapStateToProps)(Management)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleSetDataLoading(dataLoading) {
+      dispatch(managementCreators.setDataLoading(dataLoading))
+    },
+    handleGetDocList() {
+      dispatch(managementCreators.toGetDocList())
+    },
+    handleGetVisitorDocList() {
+      dispatch(managementCreators.toGetVisitorDocList())
+    },
+    handleModalShow(isModalShow) {
+      dispatch(managementCreators.setIsModalShow(isModalShow))
+    },
+    handleConfirmShow(isConfirmShow) {
+      dispatch(managementCreators.setIsConfirmShow(isConfirmShow))
+    },
+    handleSetFileName(fileName) {
+      dispatch(managementCreators.setFileName(fileName))
+    },
+    handleDeleteFile(path) {
+      dispatch(managementCreators.toDeleteFile(path))
+    },
+    handleSetEditData(editData) {
+      dispatch(managementCreators.setEditData(editData))
+    },
+    handleSetIsEditModalShow(isEditModalShow) {
+      dispatch(managementCreators.setIsEditModalShow(isEditModalShow))
+    },
+    handleSetConfirmLoading(confirmLoading) {
+      dispatch(managementCreators.setConfirmLoading(confirmLoading))
+    },
+    handleDeleteRecord(key) {
+      dispatch(managementCreators.toDeleteRecord(key))
+    },
+    handlePostDocRecord(name, url, description) {
+      dispatch(managementCreators.toPostDocRecord(name, url, description))
+    },
+    handleShearFile(name, url, filePath) {
+      dispatch(managementCreators.toShearFile(name, url, filePath))
+    },
+    handleUpdateDocRecord(id, name, description) {
+      dispatch(managementCreators.toUpdateDocRecord(id, name, description))
+    },
+    handleDownload(fileType, fileName) {
+      dispatch(managementCreators.toDownloadFile(fileType, fileName))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Management)

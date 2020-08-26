@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'antd'
 import ModuleTitle from '../moduleTitle'
+import PropTypes from 'prop-types'
 
 const ErrorCode = (props) => {
 
@@ -33,6 +34,12 @@ const ErrorCode = (props) => {
       })
     }
   </>
+}
+
+ErrorCode.propTypes = {
+  title: PropTypes.string.isRequired,
+  errorCode: PropTypes.object.isRequired, 
+  columns: PropTypes.array.isRequired
 }
 
 export default ErrorCode

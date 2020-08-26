@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { List } from 'antd'
 import ModuleTitle from '../../../../components/moduleTitle'
 import ParaTitle from '../../../../components/paraTitle'
@@ -54,6 +55,16 @@ const ApiModule = (props) => {
     }
     
   </>
+}
+
+ApiModule.propTypes = {
+  hash: PropTypes.string,
+  title: PropTypes.string,
+  method: PropTypes.string,
+  path: PropTypes.string,
+  responses: PropTypes.object,
+  parameters: PropTypes.array,
+  response_description: PropTypes.array
 }
 
 export default ApiModule

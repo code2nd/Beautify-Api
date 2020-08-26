@@ -1,5 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd'
+import PropTypes from 'prop-types'
 import './index.less'
 
 const { Content, Sider } = Layout;
@@ -16,6 +17,11 @@ const Structure = (props) => {
       <Content style={{ minHeight: 280 }}>{content}</Content>
     </Layout>
   </div>
+}
+
+Structure.propTypes = {
+  menu: PropTypes.node.isRequired, 
+  content: PropTypes.node.isRequired
 }
 
 export default Structure

@@ -1,61 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { message } from 'antd'
-import { getGuidanceConfigFile } from '../../api'
-import Storage from '../../models/storage'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import Structure from '../../container/structrue'
 import CustomMenu from '../../components/customMenu'
 import DocContent from './components/docContent'
+import { getGuidance } from '../../store/guidance/actionCreators'
+import { setHash } from '../../store/common/actionCreators'
 
-const LStorage = new Storage('localStorage')
+const Guidance = (props) => {
 
-const Guidance = () => {
-
-  const [hash, setHash] = useState('')
-  const [data, setData] = useState({})
-  const [menuData, setMenuData] = useState([])
-
-  const handleMenuClick = useCallback((key) => {
-    setHash(key)
-  }, [])
-
-  const handleGetGuidanceConfigFile = async () => {
-    const menuDataArr = []
-    const storedGuidanceData = LStorage.get('guidanceData')
-    if (storedGuidanceData) {
-      setData(storedGuidanceData)
-      for (const item in storedGuidanceData) {
-        menuDataArr.push(storedGuidanceData[item])
-      }
-      setMenuData(menuDataArr)
-    } else {
-      try {
-        const res = await getGuidanceConfigFile()
-        if (Object.keys(res).length) {
-          setData(res)
-          LStorage.set('guidanceData', res)
-          for (const item in res) {
-            menuDataArr.push(res[item])
-          }
-          setMenuData(menuDataArr)
-        }
-      } catch (error) {
-        console.info(error)
-        message.warning('获取配置文件失败！')
-      }
-    }
-  }
+  const {
+    hash,
+    data,
+    menuData,
+    handleGetGuidanceConfigFile
+  } = props
 
   useEffect(() => {
     handleGetGuidanceConfigFile()
-  }, [])
+  }, [handleGetGuidanceConfigFile])
 
   return <div className="s-container">
           <main>
-            <Structure 
+            <Structure
               menu={<CustomMenu 
                       hash={hash}
                       menuData={menuData}
-                      handleMenuClick={handleMenuClick} 
+                      handleMenuClick={(key) => props.handleSetHash(key)} 
                     />} 
               content={<DocContent hash={hash} data={data} />}
             />
@@ -63,4 +33,23 @@ const Guidance = () => {
         </div>
 }
 
-export default Guidance
+const mapStateToProps = (state) => {
+  return {
+    hash: state.common.hash,
+    data: state.guidance.data,
+    menuData: state.guidance.menuData
+  }
+}
+
+const mapDispathToProps = (dispatch) => {
+  return {
+    handleGetGuidanceConfigFile() {
+      dispatch(getGuidance())
+    },
+    handleSetHash(hash) {
+      dispatch(setHash(hash))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(Guidance)

@@ -1,7 +1,8 @@
 import React, { memo, useState } from 'react'
 import { Modal, Result, Button, message } from 'antd'
 import { connect } from 'react-redux'
-import { setShowLoginModal } from '../../store/actionCreators'
+import PropTypes from 'prop-types'
+import { setShowLoginModal } from '../../store/header/actionCreators'
 import BaseForm from '../baseForm'
 import Login from '../login'
 import { registerForm } from '../../utils/formConfig'
@@ -129,9 +130,14 @@ const UserModal = memo((props) => {
   </Modal>
 })
 
+UserModal.propTypes = {
+  showLoginModal: PropTypes.bool.isRequired,
+  handleDispatchShowLoginModal: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
-    showLoginModal: state.showLoginModal
+    showLoginModal: state.header.showLoginModal
   }
 }
 

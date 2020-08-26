@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Anchor }  from 'antd'
+import PropTypes from 'prop-types'
 import './index.less'
 
 const { Link } = Anchor
@@ -57,5 +58,10 @@ const CustomMenu = memo((props) => {
     </section>
   </>
 })
+
+CustomMenu.propTypes = {
+  hash: PropTypes.string,
+  menuData: PropTypes.array
+}
 
 export default CustomMenu

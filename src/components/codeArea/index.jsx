@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './index.less'
 
 const CodeArea = (props) => {
@@ -38,6 +39,11 @@ const CodeArea = (props) => {
   return <pre className="code" >
     <p dangerouslySetInnerHTML={{ __html: formatCode(codes) }}></p>
   </pre>
+}
+
+CodeArea.propTypes = {
+  codes: PropTypes.any,
+  hasQuot: PropTypes.bool
 }
 
 export default CodeArea

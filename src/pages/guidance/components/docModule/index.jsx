@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ModuleTitle from '../../../../components/moduleTitle'
 import DangerP from '../../../../components/dangerP'
 import CodeArea from '../../../../components/codeArea'
@@ -26,6 +27,10 @@ const DocModule = (props) => {
   return <>
     { generateDom(content) }
   </>
+}
+
+DocModule.propTypes = {
+  content: PropTypes.array.isRequired
 }
 
 export default DocModule

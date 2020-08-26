@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { Popover } from 'antd'
 import ActionPopover from '../actionPopover'
@@ -91,6 +92,15 @@ const DocModule = (props) => {
         </Popover> : null
       }
     </div>
+}
+
+DocModule.propTypes = {
+  info: PropTypes.object.isRequired,
+  gotoDoc: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func,
+  onDownloadJsonClick: PropTypes.func,
+  onDownloadWordClick: PropTypes.func,
+  onDeleteClick: PropTypes.func
 }
 
 export default withRouter(DocModule)

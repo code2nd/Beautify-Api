@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const DangerP = (props) => {
 
@@ -11,6 +12,10 @@ return <p style={{
         }} 
         dangerouslySetInnerHTML={{ __html: text }}
       />
+}
+
+DangerP.propTypes = {
+  text: PropTypes.string
 }
 
 export default DangerP

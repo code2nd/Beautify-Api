@@ -1,5 +1,6 @@
 import React from 'react'
 import { Badge, Typography } from 'antd'
+import PropTypes from 'prop-types'
 import DangerP from '../../components/dangerP'
 
 const { Title } = Typography
@@ -29,6 +30,14 @@ const PageTitle = (props) => {
       <p className="description">{description}</p>
     </hgroup>
   </div>
+}
+
+PageTitle.propTypes = {
+  title: PropTypes.string,
+  host: PropTypes.string,
+  basePath: PropTypes.string,
+  version: PropTypes.string,
+  description: PropTypes.string
 }
 
 export default PageTitle
