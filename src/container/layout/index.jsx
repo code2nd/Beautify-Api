@@ -57,12 +57,6 @@ const MainLayout = memo((props) => {
         </>
 })
 
-const mapStateToProps = (state) => {
-  return {
-    
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     handleDispatchIsLogin (isLogin) {
@@ -71,4 +65,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainLayout)
+export default connect(null, mapDispatchToProps)(MainLayout)

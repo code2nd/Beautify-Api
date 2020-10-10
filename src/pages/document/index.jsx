@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Spin, Result } from 'antd'
+import { Spin, Result, message } from 'antd'
 import Storage from '../../models/storage'
 import Structure from '../../container/structrue'
 import CustomMenu from '../../components/customMenu'
@@ -14,18 +14,16 @@ const LStorage = new Storage('localStorage')
 
 const Document = (props) => {
 
-  const { 
+  const {
     isLogin,
     hash,
     loading,
     docInfo,
     menuData,
-    normal,
     docData,
     handleGetDocDataByUrl,
     handleSetDocData,
     handleSetMenuData,
-    handleSetNormal,
     handleSetLoading,
     handleGetDocInfo,
     handleGetDefaultDocInfo
@@ -49,8 +47,7 @@ const Document = (props) => {
             handleSetDocData(storagedDocData)
             handleSetMenuData(_menuData)
           } else {
-            handleSetNormal(false)
-            // message.warning('请检查api文件是否配置正确')
+            message.warning('请检查api文件是否配置正确')
           }
           handleSetLoading(false)
         } else {
@@ -60,32 +57,26 @@ const Document = (props) => {
       }
     }
   }, [
-    isLogin, 
+    isLogin,
     docInfo,
     handleGetDocDataByUrl,
     handleSetDocData,
     handleSetMenuData,
-    handleSetNormal,
     handleSetLoading
   ])
 
   useEffect(() => {
-    const historyDoc = LStorage.get('historyDoc')
-    const fileName = props.location.state && props.location.state.name
-    const _docName = fileName || historyDoc || 'example'
-    LStorage.set('historyDoc', _docName)
     if (isLogin) {
-      if (!Object.keys(docInfo).length || (fileName && (fileName !== docInfo.name))) {
-        handleGetDocInfo(_docName)
-      }
+      const fileName = props.location.state && props.location.state.name
+      const historyDoc = LStorage.get('historyDoc')
+      const docName = fileName || historyDoc || 'example'
+      LStorage.set('historyDoc', docName)
+      handleGetDocInfo(docName)
     } else {
-      if (!Object.keys(docInfo).length) {
-        handleGetDefaultDocInfo()
-      }
+      handleGetDefaultDocInfo()
     }
   }, [
-    isLogin, 
-    docInfo, 
+    isLogin,
     props.location.state,
     handleGetDocInfo,
     handleGetDefaultDocInfo
@@ -95,24 +86,24 @@ const Document = (props) => {
     handleGetDocData()
   }, [handleGetDocData])
 
+  useEffect(() => {
+    return () => { 
+      handleSetLoading(true)
+      handleSetDocData({})
+    }
+  }, [
+    handleSetLoading, 
+    handleSetDocData
+  ])
+
   return <div className="s-container">
           <Spin spinning={loading}>
-            <main>
+            <main style={{ visibility: loading ? 'hidden' : 'visible' }}>
               {
-                normal ? <Structure 
-                  menu={<CustomMenu 
-                          hash={hash}
-                          menuData={menuData}
-                          handleMenuClick={(key) => props.handleSetHash(key)} 
-                        />} 
-                  content={<DocContent 
-                              hash={hash}
-                              docData={docData}
-                            />}
-                /> : <Result
-                status="404"
-                title="文档为空或文档不存在"
-              />
+                docData && Object.keys(docData).length ? <Structure 
+                  menu={<CustomMenu hash={hash} menuData={menuData} handleMenuClick={(key) => props.handleSetHash(key)} />} 
+                  content={<DocContent hash={hash} docData={docData} />}
+                /> : <Result status="404" title="文档为空或文档不存在" />
               }
             </main>
           </Spin>
@@ -128,7 +119,6 @@ const mapStateToProps = (state) => {
     loading,
     docInfo,
     menuData,
-    normal,
     docData
   } = state.document
 
@@ -138,7 +128,6 @@ const mapStateToProps = (state) => {
     loading,
     docInfo,
     menuData,
-    normal,
     docData
   }
 }
@@ -161,9 +150,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleSetMenuData(menuData) {
     dispatch(documentCreators.setMenuData(menuData))
-  },
-  handleSetNormal(normal) {
-    dispatch(documentCreators.setNormal(normal))
   },
   handleGetDocDataByUrl(isLogin, url, storagedDocName) {
     dispatch(documentCreators.toGetDocData(isLogin, url, storagedDocName))

@@ -2,7 +2,6 @@ import {
   SET_LOADING,
   SET_DOC_INFO,
   SET_MENU_DATA,
-  SET_NORMAL,
   SET_DOC_DATA
 } from './actionTypes'
 import { 
@@ -14,6 +13,8 @@ import {
  import Storage from '../../models/storage'
  import { apiDataProxy } from '../../utils/proxy'
  import { errorCodeMenu } from '../../utils/utils'
+ import Config from '../../utils/config'
+ import { defaultState } from './reducer'
 
 const LStorage = new Storage('localStorage')
 
@@ -32,60 +33,52 @@ export const setMenuData = (menuData) => ({
   menuData
 })
 
-export const setNormal = (normal) => ({
-  type: SET_NORMAL,
-  normal
-})
-
 export const setDocData = (docData) => ({
   type: SET_DOC_DATA,
   docData
 })
 
-// 根据文档名称获取文档记录
+// 根据文档名称获取文档信息
 export const toGetDocInfo = (name) => {
   return async (dispatch) => {
     try {
       const res = await getDocByName(name)
       dispatch(setDocInfo(res))
-      dispatch(setLoading(false))
     } catch (err) {
       console.log(err)
       dispatch(setDocInfo({}))
-      dispatch(setLoading(false))
     }
-    
   }
 }
 
+// 获取默认示例文档信息
 export const toGetDefaultDocInfo = () => {
   return async (dispatch) => {
     try {
       const res = await getDefaultDataInfo()
       dispatch(setDocInfo(res))
-      dispatch(setLoading(false))
     } catch (err) {
       console.log(err)
       dispatch(setDocInfo({}))
-      dispatch(setLoading(false))
     }
   }
 }
 
+// 根据路径获取文档数据
 export const toGetDocData = (isLogin, url, storagedDocName) => {
   return async (dispatch) => {
     try {
       const _res = isLogin ? await getApiDoc(url) : await getDocDataVisitor(url)
       const res = apiDataProxy(_res)
       const _menuData = res.errorCode ? [...res.interfaces, errorCodeMenu(res.errorCode)] : [...res.interfaces]
-      dispatch(setDocData(res))
       dispatch(setMenuData(_menuData))
-      dispatch(setLoading(false))
-      LStorage.set(storagedDocName, res, 60*60*24*365) // 缓存有效期一年
+      dispatch(setDocData(res))
+      LStorage.set(storagedDocName, res, Config.expires)
     } catch (err) {
       console.log(err)
-      dispatch(setNormal(false))
-      dispatch(setLoading(false))
+      dispatch(setDocData(defaultState.docData))
+      dispatch(setMenuData(defaultState.menuData))
     }
+    dispatch(setLoading(false))
   }
 }

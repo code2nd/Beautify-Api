@@ -2,7 +2,6 @@ import {
   SET_LOADING,
   SET_DOC_INFO,
   SET_MENU_DATA,
-  SET_NORMAL,
   SET_DOC_DATA
 } from './actionTypes'
 
@@ -10,15 +9,7 @@ export const defaultState = {
   loading: true,
   docInfo: {},
   menuData: [],
-  normal: true,
-  docData: {
-    basePath: "",
-    host: "",
-    info: {},
-    interfaces: [],
-    parameters: [],
-    errorCode: {}
-  }
+  docData: {}
 }
 
 export default (state=defaultState, action) => {
@@ -38,15 +29,11 @@ export default (state=defaultState, action) => {
         ...state,
         menuData: action.menuData
       }
-    case SET_NORMAL: 
-      return {
-        ...state,
-        normal: action.normal
-      }
     case SET_DOC_DATA: 
       return {
         ...state,
-        docData: action.docData
+        docData: action.docData,
+        docInfo: defaultState.docInfo
       }
     default: return state
   }
