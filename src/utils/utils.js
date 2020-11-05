@@ -1,4 +1,5 @@
 import { message } from "antd"
+import md5 from 'md5'
 
 /**
  * 验证必填项
@@ -39,8 +40,13 @@ const errorCodeMenu = (errorCodeData) => {
   return errObj
 }
 
+const pMd5 = (username, password) => {
+  return md5(md5(password) + username)
+}
+
 export {
   validateMust,
   clearAllCookie,
-  errorCodeMenu
+  errorCodeMenu,
+  pMd5
 }

@@ -7,6 +7,7 @@ import BaseForm from '../baseForm'
 import Login from '../login'
 import { registerForm } from '../../utils/formConfig'
 import { login, register } from '../../api'
+import { pMd5 } from '../../utils/utils'
 import './index.less'
 
 const UserModal = memo((props) => {
@@ -32,7 +33,8 @@ const UserModal = memo((props) => {
   }
 
   const handleLogin = async (fields) => {
-    const { username, password } = fields
+    let { username, password } = fields
+    password = pMd5(username, password)
     try {
       const res = await login(username, password)
       if (!res.error_code) {
@@ -41,21 +43,26 @@ const UserModal = memo((props) => {
       }
     } catch (err) {
       message.error(err.msg);
-      // console.log(err)
     }
   }
 
   const handleRegister = async (fields) => {
     // console.log(fields)
-    const { username, password1, password2 } = fields
-    try {
-      const res = await register(username, password1, password2)
-      if (!res.error_code) {
-        setType('registerSuccess')
+    let { username, password1, password2 } = fields
+    if (password1 !== password2) {
+      message.warn('两次输入的密码不一致！')
+    } else {
+      password1 = pMd5(username, password1)
+      password2 = pMd5(username, password2)
+      try {
+        const res = await register(username, password1, password2)
+        if (!res.error_code) {
+          setType('registerSuccess')
+        }
+      } catch (err) {
+        setType('registerRepeated')
+        console.log(err)
       }
-    } catch (err) {
-      setType('registerRepeated')
-      console.log(err)
     }
   }
 
