@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge, Typography } from 'antd'
 import PropTypes from 'prop-types'
-import DangerP from '../../components/dangerP'
+import DangerP from '@/components/dangerP'
 
 const { Title } = Typography
 

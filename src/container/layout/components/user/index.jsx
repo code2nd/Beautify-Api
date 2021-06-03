@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Avatar, Popover, List, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
-import UserModal from '../../../../components/userModal'
-import { setShowLoginModal } from '../../../../store/header/actionCreators'
-import { logout } from '../../../../api'
+import UserModal from '@/components/userModal'
+import { setShowLoginModal } from '@/store/header/actionCreators'
+import { logout } from '@/api'
 
 const data = [
   {
@@ -73,6 +73,7 @@ const User = memo((props) => {
             size={32} 
             src={userInfo.avatarUrl}
             style={{cursor: 'pointer'}} 
+            alt="avatar"
           />
         </Popover> : 
         <Avatar 

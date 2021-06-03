@@ -18,8 +18,8 @@ import {
   shearFile,
   updateDocRecord,
   getDownloadFileInfo
-} from '../../api'
-import Storage from '../../models/storage'
+} from '@/api'
+import Storage from '@/models/storage'
 
 const SStorage = new Storage('sessionStorage')
 
@@ -91,10 +91,10 @@ export const toGetVisitorDocList = () => {
   }
 }
 
-export const toDeleteFile = (path) => {
+export const toDeleteFile = () => {
   return async (dispatch) => {
     try {
-      await deleteFile(path)
+      await deleteFile()
       dispatch(setIsConfirmShow(false))
       SStorage.remove('uploadedFileInfo')
     } catch (err) {
@@ -104,7 +104,7 @@ export const toDeleteFile = (path) => {
 }
 
 export const toDeleteRecord = (key) => {
-  return async() => {
+  return async () => {
     try {
       await deleteDocRecord(key)
       message.success('删除成功')
@@ -115,30 +115,27 @@ export const toDeleteRecord = (key) => {
   }
 }
 
-export const toPostDocRecord = (name, url, description) => {
+export const toPostDocRecord = (name, description) => {
   return async (dispatch) => {
     try {
-      const res = await postDocRecord(name, url, description)
+      const res = await postDocRecord(name, description)
       if (!res.error_code) {
-        message.success('上传成功')
         dispatch(toGetDocList())
-      } else {
-        message.error(res.msg)
       }
     } catch (err) {
       console.log(err)
-      dispatch(toDeleteFile(url))
-      message.error('上传失败')
+      dispatch(toDeleteFile())
     }
   }
 }
 
 // 覆盖文件
-export const toShearFile = (name, url, filePath) => {
-  return async () => {
+export const toShearFile = (name, description) => {
+  return async (dispatch) => {
     try {
-      await shearFile(name, url, filePath)
-      message.success('上传成功')
+      await shearFile(name, description)
+      dispatch(setIsModalShow(false))
+      dispatch(toGetDocList())
     } catch (err) {
       console.log(err)
     }
@@ -151,7 +148,6 @@ export const toUpdateDocRecord = (id, name, description) => {
     try {
       await updateDocRecord(id, name, description)
       dispatch(toGetDocList())
-      message.success('修改成功')
       dispatch(setIsEditModalShow(false))
     } catch (err) {
       if (err.error_code === 60001) {
@@ -170,8 +166,8 @@ export const toDownloadFile = (fileType, fileName) => {
       const res = await getDownloadFileInfo(fileType, fileName)
       if (res) {
         const { filePath, name } = res
-        const host = process.env.NODE_ENV === 'development' ? 'localhost' : 'jalamy.cn'
-        const url = `http://${host}:3005/v1/file/download?filePath=${filePath}&fileName=${name}`
+        const host = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'https://jalamy.cn'
+        const url = `${host}:3005/v1/file/download?filePath=${filePath}&fileName=${name}`
         window.open(url, '_self')
       } else {
         message.info('下载的文件不存在')

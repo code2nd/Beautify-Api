@@ -9,11 +9,11 @@ import {
   getApiDoc, 
   getDocDataVisitor,
   getDefaultDataInfo
- } from '../../api'
- import Storage from '../../models/storage'
- import { apiDataProxy } from '../../utils/proxy'
- import { errorCodeMenu } from '../../utils/utils'
- import Config from '../../utils/config'
+ } from '@/api'
+ import Storage from '@/models/storage'
+ import { apiDataProxy } from '@/utils/proxy'
+ import { errorCodeMenu } from '@/utils/utils'
+ import Config from '@/utils/config'
  import { defaultState } from './reducer'
 
 const LStorage = new Storage('localStorage')
@@ -65,10 +65,10 @@ export const toGetDefaultDocInfo = () => {
 }
 
 // 根据路径获取文档数据
-export const toGetDocData = (isLogin, url, storagedDocName) => {
+export const toGetDocData = (isLogin, name, storagedDocName) => {
   return async (dispatch) => {
     try {
-      const _res = isLogin ? await getApiDoc(url) : await getDocDataVisitor(url)
+      const _res = isLogin ? await getApiDoc(name) : await getDocDataVisitor(name)
       const res = apiDataProxy(_res)
       const _menuData = res.errorCode ? [...res.interfaces, errorCodeMenu(res.errorCode)] : [...res.interfaces]
       dispatch(setMenuData(_menuData))

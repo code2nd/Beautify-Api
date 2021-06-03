@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { List } from 'antd'
-import ModuleTitle from '../../../../components/moduleTitle'
-import ParaTitle from '../../../../components/paraTitle'
-import CodeArea from '../../../../components/codeArea'
+import ModuleTitle from '@/components/moduleTitle'
+import ParaTitle from '@/components/paraTitle'
+import CodeArea from '@/components/codeArea'
 import './index.less'
 
 const ApiModule = (props) => {

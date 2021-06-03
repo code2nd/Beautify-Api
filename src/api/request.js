@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { message } from 'antd'
-import { clearAllCookie } from '../utils/utils'
+import { clearAllCookie } from '@/utils/utils'
 
 export default (url, data={}, type='GET') => {
 	return new Promise ( (resolve, reject) => {

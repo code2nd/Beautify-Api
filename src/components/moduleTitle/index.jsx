@@ -1,24 +1,30 @@
-import React from 'react'
-import { Typography } from 'antd'
-import PropTypes from 'prop-types'
-
-const { Title } = Typography
+import React from "react";
+import PropTypes from "prop-types";
 
 const ModuleTitle = (props) => {
+  const { hash, title, style } = props;
 
-  const {
-    hash,
-    title,
-    style
-  } = props
-
-  return <Title id={hash} style={{ margin: '50px 0px 10px 0px', ...style }} level={3}>{title}</Title>
-}
+  return (
+    <p
+      id={hash}
+      style={{
+        margin: "50px 0px 10px 0px",
+        color: "rgba(0,0,0,.85)",
+        fontWeight: 600,
+        fontSize: "24px",
+        lineHeight: 1.35,
+        ...style,
+      }}
+    >
+      {title}
+    </p>
+  );
+};
 
 ModuleTitle.propTypes = {
   hash: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  style: PropTypes.object
-}
+  style: PropTypes.object,
+};
 
-export default ModuleTitle
+export default ModuleTitle;

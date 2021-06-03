@@ -53,7 +53,9 @@ const CustomMenu = memo((props) => {
         className="custom-menu"
         getContainer={() => document.getElementById('custom-content')}
       >
-        {generateDom(menuData)}
+        <ul className="custom-menu-ul">
+          {generateDom(menuData)}
+        </ul>
       </Anchor>
     </section>
   </>

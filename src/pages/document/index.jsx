@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Spin, Result, message } from 'antd'
-import Storage from '../../models/storage'
-import Structure from '../../container/structrue'
-import CustomMenu from '../../components/customMenu'
+import Storage from '@/models/storage'
+import Structure from '@/container/structrue'
+import CustomMenu from '@/components/customMenu'
 import DocContent from './components/docContent'
-import { setHash } from '../../store/common/actionCreators'
-import * as documentCreators from '../../store/document/actionCreators'
-import { errorCodeMenu } from '../../utils/utils'
+import { setHash } from '@/store/common/actionCreators'
+import * as documentCreators from '@/store/document/actionCreators'
+import { errorCodeMenu } from '@/utils/utils'
 
 const LStorage = new Storage('localStorage')
 
@@ -21,7 +21,7 @@ const Document = (props) => {
     docInfo,
     menuData,
     docData,
-    handleGetDocDataByUrl,
+    handleGetDocDataByName,
     handleSetDocData,
     handleSetMenuData,
     handleSetLoading,
@@ -34,10 +34,10 @@ const Document = (props) => {
   // 获取文档数据
   const handleGetDocData = useCallback(async () => {
     if (Object.keys(docInfo).length) {
-      const { url, isUpdate, name } = docInfo
+      const { isUpdate, name } = docInfo
       storagedDocName.current = `${name}DocData`
       if (isUpdate) {
-        handleGetDocDataByUrl(isLogin, url, storagedDocName.current)
+        handleGetDocDataByName(isLogin, name, storagedDocName.current)
       } else {
         const storagedDocData = LStorage.get(storagedDocName.current)
         if (storagedDocData) {
@@ -52,14 +52,14 @@ const Document = (props) => {
           handleSetLoading(false)
         } else {
           // 缓存过期了,重新请求
-          handleGetDocDataByUrl(isLogin, url, storagedDocName.current)
+          handleGetDocDataByName(isLogin, name, storagedDocName.current)
         }
       }
     }
   }, [
     isLogin,
     docInfo,
-    handleGetDocDataByUrl,
+    handleGetDocDataByName,
     handleSetDocData,
     handleSetMenuData,
     handleSetLoading
@@ -151,8 +151,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleSetMenuData(menuData) {
     dispatch(documentCreators.setMenuData(menuData))
   },
-  handleGetDocDataByUrl(isLogin, url, storagedDocName) {
-    dispatch(documentCreators.toGetDocData(isLogin, url, storagedDocName))
+  handleGetDocDataByName(isLogin, name, storagedDocName) {
+    dispatch(documentCreators.toGetDocData(isLogin, name, storagedDocName))
   }
 })
 

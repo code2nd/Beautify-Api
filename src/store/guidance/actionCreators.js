@@ -3,8 +3,8 @@ import {
   SET_DATA,
   SET_MENU_DATA
 } from './actionTypes'
-import Storage from '../../models/storage'
-import { getGuidanceConfigFile } from '../../api'
+import Storage from '@/models/storage'
+import { getGuidanceConfigFile } from '@/api'
 
 const LStorage = new Storage('localStorage')
 

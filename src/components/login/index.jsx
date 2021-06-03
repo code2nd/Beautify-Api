@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Button } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
-import BaseForm from '../../components/baseForm'
-import { loginForm } from '../../utils/formConfig'
+import BaseForm from '@/components/baseForm'
+import { loginForm } from '@/utils/formConfig'
 import './index.less'
 
 const Login = memo((props) => {
@@ -23,7 +23,6 @@ const Login = memo((props) => {
     window.open(authUrl, 'newWindow', specs)
     
     window.addEventListener('message', function (e) {
-      console.log(e)
       this.window.location.reload()
     }, false)
   }

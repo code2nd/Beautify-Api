@@ -6,10 +6,10 @@ import {
   Redirect
 } from 'react-router-dom'
 import Loadable from '@loadable/component'
-import App from '../App'
-import LayOut from '../container/layout'
-// import loading from '../components/loading'
-// import Guidance from '../pages/guidance'
+import App from '@/App'
+import LayOut from '@/container/layout'
+// import loading from '@/components/loading'
+// import Guidance from '@/pages/guidance'
 
 const Router = () => (
   <BrowserRouter>
@@ -19,22 +19,22 @@ const Router = () => (
           <Route 
             path="/" 
             exact={true}
-            component={Loadable(() => import('../pages/guidance')) } 
+            component={Loadable(() => import('@/pages/guidance')) } 
           />
           <Route 
             path="/management" 
             exact={true}
-            component={Loadable(() => import('../pages/management')) } 
+            component={Loadable(() => import('@/pages/management')) } 
           />
           <Route 
             path="/document" 
             exact={true}
-            component={Loadable(() => import('../pages/document')) } 
+            component={Loadable(() => import('@/pages/document')) } 
           />
           <Route 
             path="/404" 
             exact={true}
-            component={Loadable(() => import('../pages/404')) } 
+            component={Loadable(() => import('@/pages/404')) } 
           />
           <Redirect to="/404" />
         </Switch>

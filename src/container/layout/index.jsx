@@ -7,8 +7,8 @@ import { GithubOutlined } from '@ant-design/icons'
 import Title from './components/title'
 import Navi from './components/navi'
 import User from './components/user'
-import { getUserInfo } from '../../api'
-import { setIsLogin } from '../../store/header/actionCreators'
+import { getUserInfo } from '@/api'
+import { setIsLogin } from '@/store/header/actionCreators'
 import './index.less';
 
 const MainLayout = memo((props) => {
@@ -51,9 +51,9 @@ const MainLayout = memo((props) => {
               </Col>
             </Row>
           </header>
-          <content className="content">
+          <main className="content">
             { props.children }
-          </content>
+          </main>
         </>
 })
 

@@ -5,10 +5,10 @@ import {
 
 export const defaultState = {
   showLoginModal: false,
-  isLogin: false
+  isLogin: undefined
 }
 
-export default (state=defaultState, action) => {
+export default (state = defaultState, action) => {
   switch (action.type) {
     case SHOW_LOGIN_MODAL:
       return {

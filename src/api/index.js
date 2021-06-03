@@ -1,5 +1,5 @@
 import request from './request'
-import Config from '../utils/config'
+import Config from '@/utils/config'
 
 const { baseUrl } = Config
 
@@ -23,8 +23,8 @@ export const getUserInfo = () => request(baseUrl + '/user/userInfo', {})
 // 获取用户权限菜单
 export const getUserMenu = () => request(baseUrl + '/menu', {})
 
-// 删除文件
-export const deleteFile = (path) => request(baseUrl + '/file/delete', { path }, 'DELETE')
+// 删除文件(取消上传)
+export const deleteFile = () => request(baseUrl + '/file/cancel', {}, 'DELETE')
 
 // 获取下载文件信息
 export const getDownloadFileInfo = (fileType, fileName) => request(baseUrl + '/file/downloadFile', {fileType, fileName})
@@ -40,7 +40,7 @@ export const getDocList = () => request(baseUrl + '/doc/docs', {})
 export const getOneDocInfo = (id) => request(baseUrl + '/doc/oneDoc', {id})
 
 // 往数据库插入一条文档记录
-export const postDocRecord = (name, url, description) => request(baseUrl + '/doc/docs', { name, url, description }, 'POST')
+export const postDocRecord = (name, description) => request(baseUrl + '/doc/docs', { name, description }, 'POST')
 
 // 修改文档记录
 export const updateDocRecord = (id, name, description) => request(baseUrl + '/doc/docs', { id, name, description }, 'PUT')
@@ -49,7 +49,7 @@ export const updateDocRecord = (id, name, description) => request(baseUrl + '/do
 export const deleteDocRecord = (id) => request(baseUrl + '/doc/docs', { id }, 'DELETE')
 
 // 覆盖文件
-export const shearFile = (name, url, filePath) => request(baseUrl + '/file/cover', { name, url, filePath }, 'POST') 
+export const shearFile = (name, description) => request(baseUrl + '/file/cover', { name, description }, 'POST') 
 
 // 根据文件名获取文档记录
 export const getDocByName = (name) => request(baseUrl + '/doc/name', { name })
@@ -65,10 +65,10 @@ export const getDefaultDataInfo = () => request(baseUrl + '/doc/visitorDocInfo',
 /**
  *  接口
  */
-export const getApiDoc = (url) => request(baseUrl + '/file/doc', { url })
+export const getApiDoc = (name) => request(baseUrl + '/file/doc', { name })
 
 // 游客获取默认文档
-export const getDocDataVisitor = (url) =>  request(baseUrl + '/file/visitorDocData', {url})
+export const getDocDataVisitor = (name) =>  request(baseUrl + '/file/visitorDocData', {name})
 
 
 /**

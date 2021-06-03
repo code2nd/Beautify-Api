@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import Structure from '../../container/structrue'
-import CustomMenu from '../../components/customMenu'
+import Structure from '@/container/structrue'
+import CustomMenu from '@/components/customMenu'
 import DocContent from './components/docContent'
-import { getGuidance } from '../../store/guidance/actionCreators'
-import { setHash } from '../../store/common/actionCreators'
+import { getGuidance } from '@/store/guidance/actionCreators'
+import { setHash } from '@/store/common/actionCreators'
 
 const Guidance = (props) => {
 

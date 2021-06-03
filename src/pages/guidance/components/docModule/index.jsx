@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ModuleTitle from '../../../../components/moduleTitle'
-import DangerP from '../../../../components/dangerP'
-import CodeArea from '../../../../components/codeArea'
-import ParaTitle from '../../../../components/paraTitle'
+import ModuleTitle from '@/components/moduleTitle'
+import DangerP from '@/components/dangerP'
+import CodeArea from '@/components/codeArea'
+import ParaTitle from '@/components/paraTitle'
 
 const DocModule = (props) => {
 

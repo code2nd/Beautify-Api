@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { BackTop } from 'antd'
-import PageTitle from '../../../../components/pageTitle'
+import PageTitle from '@/components/pageTitle'
 import ApiModule from '../apiModule'
-import ErrorCode from '../../../../components/errorCode'
-import Storage from '../../../../models/storage'
-import { apiDataProxy } from '../../../../utils/proxy'
+import ErrorCode from '@/components/errorCode'
+import Storage from '@/models/storage'
+import { apiDataProxy } from '@/utils/proxy'
 import './index.less'
 
 const LStorage = new Storage('localStorage')

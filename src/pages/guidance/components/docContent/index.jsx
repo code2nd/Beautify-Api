@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import DocModule from '../docModule'
-import Copyright from '../../../../components/copyright'
+import Copyright from '@/components/copyright'
 
 const DocContent = memo((props) => {
 
