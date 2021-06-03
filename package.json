@@ -6,7 +6,7 @@
   "dependencies": {
     "@loadable/component": "5.12.0",
     "antd": "4.1.1",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "bcryptjs": "^2.4.3",
     "md5": "^2.3.0",
     "react": "16.13.1",
